@@ -1,5 +1,9 @@
 {
-  "body": {
+  // `atom-workspace` rather than `body`: the two match the same element with
+  // specificity 1 and 1, but only one spelling can be the fleet's, and mixing
+  // them decides conflicts by load order rather than by intent. ctrl-g is a
+  // cross-editor convention and stays out of the alt- tier.
+  "atom-workspace": {
     "ctrl-g": "go-to-line:toggle"
   },
   ".go-to-line atom-text-editor[mini]": {
