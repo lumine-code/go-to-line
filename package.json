@@ -36,7 +36,7 @@
     "format:check": "prettier --check ."
   },
   "activationCommands": {
-    "atom-text-editor": [
+    "lumine-text-editor": [
       "go-to-line:toggle"
     ]
   },

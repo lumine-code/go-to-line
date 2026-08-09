@@ -15,7 +15,7 @@ To install `go-to-line` search for _go-to-line_ in the Install pane of the Lumin
 
 ## Commands
 
-Commands available in `atom-workspace`:
+Commands available in `lumine-workspace`:
 
 - `go-to-line:toggle`: open the go-to-line prompt for the active editor.
 
