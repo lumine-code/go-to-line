@@ -6,21 +6,17 @@ describe("GoToLine", () => {
   let editorView = null;
   let goToLine = null;
 
-  beforeEach(() => {
-    waitsForPromise(() => {
-      return lumine.workspace.open(path.join(__dirname, "fixtures", "sample.js"));
-    });
+  beforeEach(async () => {
+    await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.js"));
 
-    runs(() => {
-      const workspaceElement = lumine.views.getView(lumine.workspace);
-      workspaceElement.style.height = "200px";
-      workspaceElement.style.width = "1000px";
-      jasmine.attachToDOM(workspaceElement);
-      editor = lumine.workspace.getActiveTextEditor();
-      editorView = lumine.views.getView(editor);
-      goToLine = GoToLineView.activate();
-      editor.setCursorBufferPosition([1, 0]);
-    });
+    const workspaceElement = lumine.views.getView(lumine.workspace);
+    workspaceElement.style.height = "200px";
+    workspaceElement.style.width = "1000px";
+    jasmine.attachToDOM(workspaceElement);
+    editor = lumine.workspace.getActiveTextEditor();
+    editorView = lumine.views.getView(editor);
+    goToLine = GoToLineView.activate();
+    editor.setCursorBufferPosition([1, 0]);
   });
 
   describe("when go-to-line:toggle is triggered", () => {
