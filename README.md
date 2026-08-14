@@ -11,7 +11,7 @@ Jump the cursor to a specific line number.
 
 ## Installation
 
-To install `go-to-line` search for _go-to-line_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/go-to-line`.
+To install `go-to-line` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/go-to-line`.
 
 ## Commands
 
