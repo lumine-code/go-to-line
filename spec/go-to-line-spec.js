@@ -45,9 +45,9 @@ describe("GoToLine", () => {
   });
 
   describe("when entering a range", () => {
-    it("selects from the start position to the end position", () => {
+    it("selects from the start position to the end position", async () => {
       goToLine.miniEditor.insertText("3:8-4:1");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(editor.getSelectedBufferRange()).toEqual([
         [2, 7],
         [3, 0],
@@ -56,9 +56,9 @@ describe("GoToLine", () => {
       expect(editor.getCursorBufferPosition()).toEqual([3, 0]);
     });
 
-    it("makes a reversed selection when the end is before the start", () => {
+    it("makes a reversed selection when the end is before the start", async () => {
       goToLine.miniEditor.insertText("4:1-3:8");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(editor.getSelectedBufferRange()).toEqual([
         [2, 7],
         [3, 0],
@@ -92,16 +92,16 @@ describe("GoToLine", () => {
   });
 
   describe("when entering a line number and column number", () => {
-    it("moves the cursor to the column number of the line specified", () => {
+    it("moves the cursor to the column number of the line specified", async () => {
       expect(goToLine.miniEditor.getText()).toBe("");
       goToLine.miniEditor.insertText("3:14");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(editor.getCursorBufferPosition()).toEqual([2, 13]);
     });
 
-    it("centers the selected line", () => {
+    it("centers the selected line", async () => {
       goToLine.miniEditor.insertText("45:4");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       const rowsPerPage = editor.getRowsPerPage();
       const currentRow = editor.getCursorBufferPosition().row;
       expect(editor.getFirstVisibleScreenRow()).toBe(Math.ceil(currentRow - rowsPerPage / 2));
@@ -110,24 +110,24 @@ describe("GoToLine", () => {
   });
 
   describe("when entering a line number greater than the number of rows in the buffer", () => {
-    it("moves the cursor position to the first character of the last line", () => {
+    it("moves the cursor position to the first character of the last line", async () => {
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
       expect(goToLine.miniEditor.getText()).toBe("");
       goToLine.miniEditor.insertText("78");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(goToLine.panel.isVisible()).toBeFalsy();
       expect(editor.getCursorBufferPosition()).toEqual([77, 0]);
     });
   });
 
   describe("when entering a column number greater than the number in the specified line", () => {
-    it("moves the cursor position to the last character of the specified line", () => {
+    it("moves the cursor position to the last character of the specified line", async () => {
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
       expect(goToLine.miniEditor.getText()).toBe("");
       goToLine.miniEditor.insertText("3:43");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(goToLine.panel.isVisible()).toBeFalsy();
       expect(editor.getCursorBufferPosition()).toEqual([2, 39]);
     });
@@ -135,47 +135,47 @@ describe("GoToLine", () => {
 
   describe("when core:confirm is triggered", () => {
     describe("when a line number has been entered", () => {
-      it("moves the cursor to the first character of the line", () => {
+      it("moves the cursor to the first character of the line", async () => {
         goToLine.miniEditor.insertText("3");
-        lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+        await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
         expect(editor.getCursorBufferPosition()).toEqual([2, 4]);
       });
     });
 
     describe("when the line number entered is nested within foldes", () => {
-      it("unfolds all folds containing the given row", () => {
+      it("unfolds all folds containing the given row", async () => {
         expect(editor.indentationForBufferRow(9)).toEqual(3);
         editor.foldAll();
         expect(editor.screenRowForBufferRow(9)).toEqual(0);
         goToLine.miniEditor.insertText("10");
-        lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+        await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
         expect(editor.getCursorBufferPosition()).toEqual([9, 6]);
       });
     });
   });
 
   describe("when no line number has been entered", () => {
-    it("closes the view and does not update the cursor position", () => {
+    it("closes the view and does not update the cursor position", async () => {
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(goToLine.panel.isVisible()).toBeFalsy();
       expect(editor.getCursorBufferPosition()).toEqual([1, 0]);
     });
   });
 
   describe("when no line number has been entered, but a column number has been entered", () => {
-    it("navigates to the column of the current line", () => {
+    it("navigates to the column of the current line", async () => {
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
       goToLine.miniEditor.insertText("4:1");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(goToLine.panel.isVisible()).toBeFalsy();
       expect(editor.getCursorBufferPosition()).toEqual([3, 0]);
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
       goToLine.miniEditor.insertText(":19");
-      lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
+      await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       expect(goToLine.panel.isVisible()).toBeFalsy();
       expect(editor.getCursorBufferPosition()).toEqual([3, 18]);
     });
