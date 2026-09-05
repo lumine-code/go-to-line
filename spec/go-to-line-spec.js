@@ -1,4 +1,4 @@
-const GoToLineView = require("../lib/go-to-line-view");
+const GoToLinePackage = require("../lib/go-to-line-view");
 const path = require("path");
 
 describe("GoToLine", () => {
@@ -15,8 +15,12 @@ describe("GoToLine", () => {
     jasmine.attachToDOM(workspaceElement);
     editor = lumine.workspace.getActiveTextEditor();
     editorView = lumine.views.getView(editor);
-    goToLine = GoToLineView.activate();
+    goToLine = GoToLinePackage.activate();
     editor.setCursorBufferPosition([1, 0]);
+  });
+
+  afterEach(async () => {
+    await GoToLinePackage.deactivate();
   });
 
   describe("when go-to-line:toggle is triggered", () => {
