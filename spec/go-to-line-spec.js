@@ -32,7 +32,7 @@ describe("GoToLine", () => {
   });
 
   describe("when entering a line number", () => {
-    it("only allows 0-9, colon, and dash characters to be entered in the mini editor", () => {
+    it("only allows digits, colons, dashes, and commas in the mini editor", () => {
       expect(goToLine.miniEditor.getText()).toBe("");
       goToLine.miniEditor.insertText("a");
       expect(goToLine.miniEditor.getText()).toBe("");
@@ -45,6 +45,58 @@ describe("GoToLine", () => {
       expect(goToLine.miniEditor.getText()).toBe("4");
       goToLine.miniEditor.insertText("-");
       expect(goToLine.miniEditor.getText()).toBe("4-");
+      goToLine.miniEditor.insertText(",");
+      expect(goToLine.miniEditor.getText()).toBe("4-,");
+    });
+  });
+
+  describe("when entering multiple items", () => {
+    it("creates a cursor for every comma-separated position", () => {
+      goToLine.miniEditor.insertText("3,5:2,9:3");
+      expect(editor.getCursorBufferPositions()).toEqual([
+        [2, 4],
+        [4, 1],
+        [8, 2],
+      ]);
+      expect(editor.getCursorBufferPosition()).toEqual([8, 2]);
+    });
+
+    it("mixes forward and reversed selections", () => {
+      goToLine.miniEditor.insertText("3:8-4:1,6:4-5:2");
+      expect(editor.getSelectedBufferRanges()).toEqual([
+        [
+          [2, 7],
+          [3, 0],
+        ],
+        [
+          [4, 1],
+          [5, 3],
+        ],
+      ]);
+      expect(editor.getSelections().map((selection) => selection.isReversed())).toEqual([
+        false,
+        true,
+      ]);
+      expect(editor.getCursorBufferPosition()).toEqual([4, 1]);
+    });
+
+    it("treats the start of an incomplete final range as a cursor", () => {
+      goToLine.miniEditor.insertText("3:8,5:3-");
+      expect(editor.getSelectedBufferRanges()).toEqual([
+        [
+          [2, 7],
+          [2, 7],
+        ],
+        [
+          [4, 2],
+          [4, 2],
+        ],
+      ]);
+    });
+
+    it("ignores an empty trailing item while the comma is being typed", () => {
+      goToLine.miniEditor.insertText("3:8,");
+      expect(editor.getCursorBufferPositions()).toEqual([[2, 7]]);
     });
   });
 

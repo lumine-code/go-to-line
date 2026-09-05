@@ -2,7 +2,7 @@
   "name": "go-to-line",
   "author": "lumine-code",
   "version": "1.0.0",
-  "description": "Show the cursor position and jump to a line or range.",
+  "description": "Show the cursor position and jump to lines or ranges.",
   "keywords": [
     "navigation",
     "cursor",
@@ -27,7 +27,7 @@
     "lumine": "^1.0.0"
   },
   "backgroundTips": [
-    "You can jump straight to a line number with {{ 'go-to-line:toggle' | keystroke }}",
+    "You can jump straight to lines or ranges with {{ 'go-to-line:toggle' | keystroke }}",
     "The status bar shows the cursor position and selection size; click it to open Go to Line."
   ],
   "scripts": {
