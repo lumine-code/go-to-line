@@ -26,10 +26,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "You can jump straight to lines or ranges with {{ 'go-to-line:toggle' | keystroke }}",
-    "The status bar shows the cursor position and selection size; click it to open Go to Line."
-  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
@@ -61,6 +57,13 @@
       "description": "Liquid template used when `Status Bar Template` is `Custom`. Variables: `start.row`, `start.col` (where the selection begins, or the cursor when nothing is selected), `end.row`, `end.col` (where the cursor is; equals `start` with no selection), `lines`, `chars` (selected line and character counts), and `n` (number of cursors). `start` and `end` follow the selection's direction.",
       "type": "string",
       "default": "{{ start.row }}:{{ start.col }}{% if chars %}-{{ end.row }}:{{ end.col }}{% endif %}{% if n > 1 %} #{{ n }}{% endif %}"
+    }
+  },
+  "providedServices": {
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
+      }
     }
   },
   "consumedServices": {
