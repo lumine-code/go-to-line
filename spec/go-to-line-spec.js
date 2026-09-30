@@ -29,6 +29,36 @@ describe("GoToLine", () => {
       lumine.commands.dispatch(editorView, "go-to-line:toggle");
       expect(goToLine.panel.isVisible()).toBeTruthy();
     });
+
+    it("closes the center document from its mini input and dismisses the orphaned prompt", async () => {
+      const previousEditor = await lumine.workspace.open();
+      await lumine.workspace.open(editor);
+      lumine.keymaps.loadBundledKeymaps();
+      const keymapPath = path.join(__dirname, "..", "keymaps", "main.json");
+      lumine.keymaps.loadKeymap(keymapPath);
+      try {
+        lumine.commands.dispatch(editorView, "go-to-line:toggle");
+        const input = goToLine.miniEditor.element;
+        const event = new KeyboardEvent("keydown", {
+          key: "w",
+          ctrlKey: process.platform !== "darwin",
+          metaKey: process.platform === "darwin",
+          bubbles: true,
+          cancelable: true,
+        });
+        Object.defineProperty(event, "target", { get: () => input });
+
+        lumine.keymaps.handleKeyboardEvent(event);
+
+        expect(editor.isDestroyed()).toBe(true);
+        expect(previousEditor.isDestroyed()).toBe(false);
+        expect(lumine.workspace.getCenter().getActivePaneItem()).toBe(previousEditor);
+        expect(goToLine.panel.isVisible()).toBe(false);
+        expect(goToLine.miniEditor.isDestroyed()).toBe(false);
+      } finally {
+        lumine.keymaps.removeBindingsFromSource(keymapPath);
+      }
+    });
   });
 
   describe("when entering a line number", () => {

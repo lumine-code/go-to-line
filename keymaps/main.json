@@ -8,7 +8,6 @@
   },
   ".go-to-line lumine-text-editor[mini]": {
     "enter": "core:confirm",
-    "escape": "core:cancel",
-    "cmdorctrl-w": "core:cancel"
+    "escape": "core:cancel"
   }
 }
