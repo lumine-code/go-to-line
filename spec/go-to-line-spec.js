@@ -189,7 +189,7 @@ describe("GoToLine", () => {
       goToLine.miniEditor.insertText("45:4");
       await lumine.commands.dispatch(goToLine.miniEditor.element, "core:confirm");
       const rowsPerPage = editor.getRowsPerPage();
-      const currentRow = editor.getCursorBufferPosition().row;
+      const currentRow = editor.getCursorScreenPosition().row;
       expect(editor.getFirstVisibleScreenRow()).toBe(Math.ceil(currentRow - rowsPerPage / 2));
       expect(editor.getLastVisibleScreenRow()).toBe(currentRow + Math.floor(rowsPerPage / 2));
     });
