@@ -2,6 +2,8 @@
 
 Show the cursor position and jump to lines or ranges.
 
+Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/go-to-line`).
+
 ## Features
 
 - **Line navigation**: moves the cursor to the line number you type.
