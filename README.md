@@ -22,7 +22,7 @@ To install `go-to-line` search for it in the Install pane of the Lumine settings
 
 Commands available in `lumine-workspace`:
 
-- `go-to-line:toggle`: open the go-to-line prompt for the active editor.
+- `go-to-line:toggle`: open the go-to-line prompt for the editor where the command was dispatched, or the active editor from the workspace. The prompt keeps that editor as its target until it closes.
 
 ## Configuration
 
