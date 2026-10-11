@@ -44,6 +44,21 @@ describe("Go To Line command editor ownership", () => {
     expect(first.getCursorBufferPosition().toArray()).toEqual([2, 1]);
     expect(second.getCursorBufferPosition().toArray()).toEqual([0, 0]);
   });
+  it("uses the current editor scroll zone for previews and confirmation", async () => {
+    const model = await prompt(first.getElement());
+    const scrollRequests = [];
+    const subscription = first.onDidRequestAutoscroll((request) => scrollRequests.push(request));
+    lumine.config.set("editor.scrollZone", [20, 70]);
+
+    model.getQueryEditor().setText("3:2");
+
+    expect(first.getCursorBufferPosition().toArray()).toEqual([2, 1]);
+    expect(scrollRequests.at(-1).options.mode).toEqual([20, 70]);
+    lumine.config.set("editor.scrollZone", [35]);
+    await lumine.commands.dispatch(model.getQueryEditor().getElement(), "core:confirm");
+    expect(scrollRequests.at(-1).options.mode).toEqual([35, 35]);
+    subscription.dispose();
+  });
   it("opens for the editor that dispatched the command from another pane", async () => {
     const model = await prompt(second.getElement());
     await navigate(model, "2:3");
