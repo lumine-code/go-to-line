@@ -97,7 +97,9 @@ describe("Editor Position", () => {
   });
 
   it("hides when the active pane item is not a text editor", () => {
-    lumine.workspace.getActivePane().activateItem(document.createElement("div"));
+    const item = document.createElement("div");
+    item.isSingleton = () => true;
+    lumine.workspace.getActivePane().activateItem(item);
     updateDocument();
     expect(editorPosition).toBeHidden();
   });
