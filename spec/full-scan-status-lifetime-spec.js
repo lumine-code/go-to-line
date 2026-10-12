@@ -1,5 +1,15 @@
 describe("go-to-line full-scan status service lifetime", () => {
   let main, hub, consumer, bars, providers, StatusBarView;
+  const serviceFor = (bar) => ({
+    observeWindows(create) {
+      const window = lumine.workspace.getMainWindow();
+      return create(bar, {
+        window,
+        document: window.getDocument(),
+        editorContainer: window.getEditorContainer(),
+      });
+    },
+  });
   const tiles = (bar) =>
     [...bar.getLeftTiles(), ...bar.getRightTiles()].filter((tile) =>
       tile.getItem().matches?.(".editor-position"),
@@ -11,7 +21,7 @@ describe("go-to-line full-scan status service lifetime", () => {
     StatusBarView = lumine.packages.getActivePackage("status-bar").mainModule.statusBar.constructor;
     await lumine.workspace.open();
     hub = new lumine.packages.serviceHub.constructor();
-    consumer = hub.consume("status-bar", "^1.0.0", (bar) => main.consumeStatusBar(bar));
+    consumer = hub.consume("status-bar", "^2.0.0", (service) => main.consumeStatusBar(service));
     bars = [];
     providers = [];
   });
@@ -30,7 +40,7 @@ describe("go-to-line full-scan status service lifetime", () => {
       bars.push(bar);
       jasmine.attachToDOM(bar.element);
     }
-    const provider = hub.provide("status-bar", "1.0.0", bar);
+    const provider = hub.provide("status-bar", "2.0.0", serviceFor(bar));
     providers.push(provider);
     return { bar, provider };
   };
@@ -76,7 +86,7 @@ describe("go-to-line full-scan status service lifetime", () => {
       main.deactivate();
       return tile;
     });
-    const lease = main.consumeStatusBar(bar);
+    const lease = main.consumeStatusBar(serviceFor(bar));
     await Promise.resolve();
     expect(tiles(bar).length).toBe(0);
     expect(lumine.tooltips.findTooltips(staged)).toEqual([]);
@@ -107,7 +117,7 @@ describe("go-to-line full-scan status service lifetime", () => {
       const current = main.activate();
       current.open();
       currentHost = current.inputDialogHost;
-      currentLease = main.consumeStatusBar(entry.bar);
+      currentLease = main.consumeStatusBar(serviceFor(entry.bar));
       destroy();
     });
     main.deactivate();
@@ -133,7 +143,7 @@ describe("go-to-line full-scan status service lifetime", () => {
         }
         return tile;
       });
-      const lease = main.consumeStatusBar(bar);
+      const lease = main.consumeStatusBar(serviceFor(bar));
       await Promise.resolve();
       expect(tiles(bar).length).toBe(restore ? 1 : 0);
       lease.dispose();
