@@ -2,9 +2,10 @@
   "title": "go-to-line",
   "description": "Navigate to a line in the current file.",
   "recordedOn": "2026-10-13",
-  "sourceRevision": "517109a4726c24a452bf941bd9b023ca5febf976",
+  "sourceRevision": "630d94fa13fd973ec120f77a9f2f105cc8a94700",
   "mode": "normal",
   "fontSettings": "default",
+  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
   "images": [
     {
       "file": "demo.png",
