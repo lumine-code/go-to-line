@@ -17,7 +17,8 @@
       },
       {
         "label": "Go to Line…",
-        "command": "go-to-line:toggle"
+        "command": "go-to-line:toggle",
+        "mouseBindingLabel": "LMB"
       },
       {
         "type": "separator"
