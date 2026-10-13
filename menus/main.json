@@ -9,5 +9,19 @@
         }
       ]
     }
-  ]
+  ],
+  "context-menu": {
+    ".editor-position": [
+      {
+        "type": "separator"
+      },
+      {
+        "label": "Go to Line…",
+        "command": "go-to-line:toggle"
+      },
+      {
+        "type": "separator"
+      }
+    ]
+  }
 }

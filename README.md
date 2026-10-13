@@ -30,6 +30,8 @@ The position tile is rendered from a Liquid template. Pick a preset in the Setti
 
 Turn `Show In Status Bar` off to use the command without displaying the tile.
 
+Click the position tile to open Go to Line, or right-click it to select the same action from its context menu.
+
 ## Services
 
 - `status-bar`: consumed to add the editor-position tile to the left side of the status bar.
