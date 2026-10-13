@@ -5,7 +5,9 @@
       "submenu": [
         {
           "label": "Go to Line…",
-          "command": "go-to-line:toggle"
+          "command": "go-to-line:toggle",
+          "group": "navigation",
+          "order": 20
         }
       ]
     },
