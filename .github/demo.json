@@ -1,0 +1,16 @@
+{
+  "title": "go-to-line",
+  "description": "Navigate to a line in the current file.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "517109a4726c24a452bf941bd9b023ca5febf976",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Navigate to a line in the current file.",
+      "width": 1100,
+      "height": 720
+    }
+  ]
+}
