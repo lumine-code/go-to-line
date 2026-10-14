@@ -1,17 +1,61 @@
 {
   "title": "go-to-line",
   "description": "Navigate to a line in the current file.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "630d94fa13fd973ec120f77a9f2f105cc8a94700",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "214a4e549e78670372957a33eba31e4566a974e5",
+  "themeSourceRevision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
   "mode": "normal",
   "fontSettings": "default",
-  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
+  "scenario": "demo.js",
+  "recipeHash": "fd1cb3a2f55d3494daedd7d4a126e27fbf40930c551d7f82becf17c754965272",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 720 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "385bd1b3ac2db600f1c7e077474d9da4d6deebc4",
+      "dirty": true,
+      "workingTreeHash": "0fa935626a1db13861a0b78ef5c3d890e0a6bff80b25da2fac6e9889910defe0"
+    },
+    "package": {
+      "revision": "214a4e549e78670372957a33eba31e4566a974e5",
+      "dirty": true,
+      "workingTreeHash": "6a137bb08e5d4a7ca5ae823ed0cbb9477289a7810a3d033e7d10fe04fc524665"
+    },
+    "go-to-line": {
+      "revision": "214a4e549e78670372957a33eba31e4566a974e5",
+      "dirty": true,
+      "workingTreeHash": "6a137bb08e5d4a7ca5ae823ed0cbb9477289a7810a3d033e7d10fe04fc524665"
+    },
+    "one-theme": {
+      "revision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
+      "dirty": true,
+      "workingTreeHash": "50ec2f83a6347dd8113870992ec4eb2be4014f3d9e12213c2f51b543f1eca793"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "signal.js",
+      "sha256": "2a36953daadd1ae53070d0ff7ceab4624395fdb957104aa6e8ec92d785cadf1d"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Navigate to a line in the current file.",
       "width": 1100,
-      "height": 720
+      "height": 720,
+      "sha256": "07cdb071732eb61d17406a193c49142fd45ca6de794e2bb7895b55ec141d7031"
     }
   ]
 }
