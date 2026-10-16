@@ -85,4 +85,23 @@ describe("Go To Line command editor ownership", () => {
     lumine.commands.dispatch(model.getQueryEditor().getElement(), "go-to-line:toggle");
     expect(lumine.workspace.getModalPanels().some((panel) => panel.isVisible())).toBe(false);
   });
+  it("binds the navigation shortcut only on supported editor and prompt targets", () => {
+    const keymap = require("../keymaps/main.json");
+    const keys = lumine.keymaps.add("go-to-line-local-scope-spec", keymap);
+    const tree = document.createElement("div");
+    tree.className = "tree-view";
+    lumine.workspace.getElement().append(tree);
+    try {
+      expect(
+        lumine.keymaps.findKeyBindings({ target: first.getElement(), command: "go-to-line:toggle" })
+          .length,
+      ).toBeGreaterThan(0);
+      expect(
+        lumine.keymaps.findKeyBindings({ target: tree, command: "go-to-line:toggle" }).length,
+      ).toBe(0);
+    } finally {
+      keys.dispose();
+      tree.remove();
+    }
+  });
 });
