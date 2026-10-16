@@ -41,4 +41,22 @@ describe("go-to-line status action menu", () => {
       lumine.contextMenu.templateForElement(element).map((item) => item.command),
     ).not.toContain("go-to-line:toggle");
   });
+
+  it("describes the tile's click target in its tooltip and saved focus in its menu", () => {
+    const element = tile();
+    const [tooltip] = lumine.tooltips.findTooltips(element);
+    const button = document.createElement("button");
+    lumine.workspace.getElement().append(button);
+    try {
+      editor.getElement().focus();
+      expect(tooltip.getTitle()).toContain("key-binding");
+      expect(lumine.contextMenu.templateForElement(element)[0].keyBindingLabel).toBeTruthy();
+      button.focus();
+      expect(tooltip.getTitle()).toContain("key-binding");
+      expect(lumine.contextMenu.templateForElement(element)[0].keyBindingLabel).toBeUndefined();
+      expect(tooltip.options.keyBindingTarget()).toBe(editor.getElement());
+    } finally {
+      button.remove();
+    }
+  });
 });
