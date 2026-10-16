@@ -65,13 +65,24 @@ describe("Go To Line command editor ownership", () => {
     expect(second.getCursorBufferPosition().toArray()).toEqual([1, 2]);
     expect(first.getCursorBufferPosition().toArray()).toEqual([0, 0]);
   });
-  it("retains active-editor fallback and range input for a workspace command", async () => {
-    const model = await prompt(lumine.workspace.getElement());
+  it("keeps range input on the initiating editor", async () => {
+    const model = await prompt(first.getElement());
     await navigate(model, "2:1-3:2");
     expect(first.getSelectedBufferRange().serialize()).toEqual([
       [1, 0],
       [2, 1],
     ]);
     expect(second.getCursorBufferPosition().toArray()).toEqual([0, 0]);
+  });
+  it("keeps the prompt unavailable on an unrelated workspace surface", () => {
+    const target = lumine.workspace.getElement();
+    expect(lumine.commands.canDispatch(target, "go-to-line:toggle")).toBe(false);
+    lumine.commands.dispatch(target, "go-to-line:toggle");
+    expect(lumine.workspace.getModalPanels().some((panel) => panel.isVisible())).toBe(false);
+  });
+  it("closes its own prompt exactly once from its mini editor", async () => {
+    const model = await prompt(first.getElement());
+    lumine.commands.dispatch(model.getQueryEditor().getElement(), "go-to-line:toggle");
+    expect(lumine.workspace.getModalPanels().some((panel) => panel.isVisible())).toBe(false);
   });
 });

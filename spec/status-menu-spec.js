@@ -28,7 +28,7 @@ describe("go-to-line status action menu", () => {
     lumine.contextMenu.templateForElement(element);
     expect(dispatch).not.toHaveBeenCalled();
     element.click();
-    expect(dispatch).toHaveBeenCalledOnceWith(element, "go-to-line:toggle");
+    expect(dispatch).toHaveBeenCalledOnceWith(editor.getElement(), "go-to-line:toggle");
   });
 
   it("retires the tile click handler and its menu on deactivation", async () => {

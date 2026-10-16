@@ -28,7 +28,7 @@ describe("go-to-line window contexts", () => {
     query.setText("1:2");
     expect(copy.getCursorBufferPosition().toArray()).toEqual([0, 1]);
     expect(editor.getCursorBufferPosition().toArray()).toEqual([1, 1]);
-    lumine.commands.dispatch(main.getElement(), "go-to-line:toggle");
+    lumine.commands.dispatch(editor.getElement(), "go-to-line:toggle");
     await conditionPromise(() => main.getElement().querySelector(".go-to-line"));
     expect(extra.getElement().querySelector(".go-to-line")).not.toBeNull();
   });
