@@ -23,6 +23,41 @@ describe("GoToLine", () => {
     await GoToLinePackage.deactivate();
   });
 
+  it("finds the first character through bounded chunks of a long row", async () => {
+    jasmine.useRealClock();
+    editor.setText(" \t".repeat(300000) + "\u2003value");
+    const read = spyOn(editor, "lineTextForBufferRow").and.throwError("Whole-line read");
+    try {
+      goToLine.miniEditor.setText("1");
+      await goToLine.navigate();
+      expect(editor.getCursorBufferPosition()).toEqual([0, 600001]);
+    } finally {
+      read.and.callThrough();
+    }
+  });
+
+  it("discards pending navigation when the document changes", async () => {
+    jasmine.useRealClock();
+    editor.setText(" ".repeat(2000000) + "value");
+    goToLine.miniEditor.setText("1");
+    const pending = goToLine.navigate();
+    editor.setText("changed");
+    editor.setCursorBufferPosition([0, 2]);
+    await pending;
+    expect(editor.getCursorBufferPosition()).toEqual([0, 2]);
+  });
+  it("cancels a long-prefix lookup when the prompt is cancelled", async () => {
+    jasmine.useRealClock();
+    editor.setText(" ".repeat(2000000) + "value");
+    editor.setCursorBufferPosition([0, 0]);
+    goToLine.open(editor);
+    goToLine.miniEditor.setText("1");
+    const pending = goToLine.navigate({ keepOpen: true });
+    goToLine.inputDialog.requestCancel();
+    await pending;
+    expect(editor.getCursorBufferPosition()).toEqual([0, 0]);
+  });
+
   describe("when go-to-line:toggle is triggered", () => {
     it("adds a modal panel", () => {
       expect(goToLine.panel.isVisible()).toBeFalsy();

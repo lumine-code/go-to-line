@@ -26,6 +26,8 @@ Commands available in `lumine-text-editor:not([mini])` and `.go-to-line`:
 
 - `go-to-line:toggle`: open the prompt for the editor where the command was dispatched, or close its existing prompt. The prompt keeps that editor as its target until it closes.
 
+Row-only navigation scans whitespace in bounded chunks and yields while traversing unusually long prefixes. Editing the document, entering a newer destination or cancelling the prompt discards pending navigation. One input accepts at most 2,000 destinations and 65,536 characters; exceeding either limit leaves the selections unchanged.
+
 ## Configuration
 
 The position tile is rendered from a Liquid template. Pick a preset in the Settings view, or set `Status Bar Template` to `Custom` and edit `Custom Status Bar Template`. The template receives `start.row`, `start.col`, `end.row`, `end.col`, `lines`, `chars`, and `n`; `start` is the selection anchor and `end` is the cursor, so the pair follows the selection direction.
