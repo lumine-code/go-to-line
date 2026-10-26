@@ -71,7 +71,7 @@ describe("Editor Position", () => {
   it("counts UTF-16 units and mixed line endings without reading selected text", () => {
     editor.setText("A😀\r\nB́\nZ");
     const selection = editor.getLastSelection();
-    spyOn(selection, "getText").and.throwError("Selection materialization is forbidden");
+    const readText = spyOn(selection, "getText").and.callThrough();
     for (const reversed of [false, true]) {
       editor.setSelectedBufferRange(
         [
@@ -80,10 +80,15 @@ describe("Editor Position", () => {
         ],
         { reversed },
       );
+      // A small Linux PRIMARY gesture may read text while changing the range.
+      // The position tile's later document update must use metadata only.
+      readText.and.throwError("Selection materialization is forbidden");
       updateDocument();
       expect(editorPosition.textContent).toBe(`${reversed ? "1:2" : "3:2"} (3:8)`);
+      readText.and.callThrough();
     }
     editor.setCursorBufferPosition([0, 1]);
+    readText.and.throwError("Selection materialization is forbidden");
     updateDocument();
     expect(editorPosition.textContent).toBe("1:2");
   });
