@@ -68,6 +68,38 @@ describe("Editor Position", () => {
     expect(editorPosition.textContent).toBe("2:3-1:1");
   });
 
+  it("counts UTF-16 units and mixed line endings without reading selected text", () => {
+    editor.setText("A😀\r\nB́\nZ");
+    const selection = editor.getLastSelection();
+    spyOn(selection, "getText").and.throwError("Selection materialization is forbidden");
+    for (const reversed of [false, true]) {
+      editor.setSelectedBufferRange(
+        [
+          [0, 1],
+          [2, 1],
+        ],
+        { reversed },
+      );
+      updateDocument();
+      expect(editorPosition.textContent).toBe(`${reversed ? "1:2" : "3:2"} (3:8)`);
+    }
+    editor.setCursorBufferPosition([0, 1]);
+    updateDocument();
+    expect(editorPosition.textContent).toBe("1:2");
+  });
+
+  it("displays a selection count above the single-string limit using offset metadata", () => {
+    editor.setText("a\nb");
+    editor.selectAll();
+    const buffer = editor.getBuffer();
+    spyOn(editor.getLastSelection(), "getText").and.throwError("Selection exceeds string limit");
+    spyOn(buffer, "characterIndexForPosition").and.callFake((point) =>
+      point.row === 0 ? 0 : 537602502,
+    );
+    updateDocument();
+    expect(editorPosition.textContent).toBe("2:2 (2:537602502)");
+  });
+
   it("shows the number of cursors", () => {
     lumine.config.set("go-to-line.statusBarTemplate", "With Selection and Cursors");
     editor.setCursorBufferPosition([0, 0]);
