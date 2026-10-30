@@ -1,9 +1,9 @@
 {
   "title": "go-to-line",
   "description": "Navigate to a line in the current file.",
-  "recordedOn": "2026-10-14",
-  "sourceRevision": "214a4e549e78670372957a33eba31e4566a974e5",
-  "themeSourceRevision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
+  "recordedOn": "2026-10-30",
+  "sourceRevision": "7bc154dcd7b375f5de1ff56ec7fe16b622732faa",
+  "themeSourceRevision": "484213c82bbf567e2cb7cd5f85c5d73965346809",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
@@ -11,8 +11,8 @@
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.0",
-    "chrome": "152.0.7977.130",
+    "electron": "45.0.0",
+    "chrome": "156.0.8078.48",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -21,26 +21,27 @@
   },
   "viewport": { "width": 1100, "height": 720 },
   "cornerRadius": 10,
+  "privacy": { "version": 1, "location": "neutral", "textChecked": true },
   "sources": {
     "editor": {
-      "revision": "385bd1b3ac2db600f1c7e077474d9da4d6deebc4",
-      "dirty": true,
-      "workingTreeHash": "0fa935626a1db13861a0b78ef5c3d890e0a6bff80b25da2fac6e9889910defe0"
+      "revision": "19fdcde4394653d73d9b561d2b7db0540df25c98",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "package": {
-      "revision": "214a4e549e78670372957a33eba31e4566a974e5",
-      "dirty": true,
-      "workingTreeHash": "6a137bb08e5d4a7ca5ae823ed0cbb9477289a7810a3d033e7d10fe04fc524665"
+      "revision": "7bc154dcd7b375f5de1ff56ec7fe16b622732faa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "go-to-line": {
-      "revision": "214a4e549e78670372957a33eba31e4566a974e5",
-      "dirty": true,
-      "workingTreeHash": "6a137bb08e5d4a7ca5ae823ed0cbb9477289a7810a3d033e7d10fe04fc524665"
+      "revision": "7bc154dcd7b375f5de1ff56ec7fe16b622732faa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "one-theme": {
-      "revision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
-      "dirty": true,
-      "workingTreeHash": "50ec2f83a6347dd8113870992ec4eb2be4014f3d9e12213c2f51b543f1eca793"
+      "revision": "484213c82bbf567e2cb7cd5f85c5d73965346809",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
   },
   "fixtures": [
@@ -55,7 +56,7 @@
       "label": "Navigate to a line in the current file.",
       "width": 1100,
       "height": 720,
-      "sha256": "07cdb071732eb61d17406a193c49142fd45ca6de794e2bb7895b55ec141d7031"
+      "sha256": "9def60b9ad3318d03cf804b9526e48af72f1d5cf803762547f06ad9a8f93a37b"
     }
   ]
 }
